@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Вход в личный кабинет студента IT Moscow: расписание, звонки, обеды и оценки.">
+    <title>Вход | IT Moscow</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body class="login-page">
+    <header class="login-header">
+        <a class="logo" href="index.html"><span class="logo-square"></span> IT Moscow</a>
+        <div class="profile-menu is-guest" data-profile-menu>
+            <a class="profile-button" href="login.html">Войти</a>
+            <div class="profile-card">
+                <strong class="profile-card-name" data-profile-name></strong>
+                <span class="profile-card-role">Студент колледжа</span>
+                <dl class="profile-card-details">
+                    <div><dt>Группа</dt><dd data-profile-group></dd></div>
+                    <div><dt>Специальность</dt><dd data-profile-specialty></dd></div>
+                    <div><dt>Курс</dt><dd data-profile-course></dd></div>
+                    <div><dt>Логин</dt><dd data-profile-login></dd></div>
+                </dl>
+                <button class="profile-logout" type="button" data-logout>Выйти из кабинета</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="login-main">
+        <section class="login-promo">
+            <p class="login-eyebrow">IT MOSCOW</p>
+            <h1>Всё важное<br>в <span>одном</span> месте</h1>
+            <p>Расписание занятий, информация об аудиториях<br class="desktop-only"> и обедах - в личном кабинете студента.</p>
+        </section>
+
+        <section class="login-card">
+            <h2>Вход в кабинет</h2>
+            <p class="login-description">Используйте учётные данные, выданные колледжем.</p>
+            <form class="login-form" data-login-form>
+                <label for="student-login">Логин студента</label>
+                <input id="student-login" name="login" type="text" placeholder="Введите логин" autocomplete="username" required>
+
+                <label for="student-password">Пароль</label>
+                <div class="password-wrap">
+                    <input id="student-password" name="password" type="password" placeholder="Введите пароль" autocomplete="current-password" required>
+                    <button class="password-toggle" type="button" data-password-toggle aria-label="Показать пароль" aria-pressed="false">
+                        <span class="eye"></span>
+                    </button>
+                </div>
+
+                <div class="login-options">
+                    <label class="remember-option"><input type="checkbox" name="remember"> <span>Запомнить меня</span></label>
+                    <a href="#" data-message="Для восстановления доступа обратитесь в учебную часть">Не получается войти?</a>
+                </div>
+
+                <button class="login-submit" type="submit">Войти</button>
+                <p class="login-message" data-login-message role="status" aria-live="polite"></p>
+            </form>
+
+            <p class="login-bottom">Доступ предоставляется студентам колледжа.<br>По вопросам входа обратитесь в учебную часть.</p>
+        </section>
+    </main>
+    <div class="toast" role="status" aria-live="polite" data-toast></div>
+</body>
+</html>
