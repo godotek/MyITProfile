@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Оценки студента IT Moscow за неделю и средний балл по предметам.">
+    <title>Оценки | IT Moscow</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <header class="site-header">
+        <a class="logo" href="index.html"><span class="logo-square"></span> IT Moscow</a>
+        <nav class="main-nav" aria-label="Главная навигация"><a class="nav-link" href="index.html">Главная</a><a class="nav-link" href="schedule.html">Расписание</a><a class="nav-link" href="bells.html">Звонки</a><a class="nav-link" href="lunch.html">Обеды</a><a class="nav-link active" href="grades.html">Оценки</a></nav>
+        <div class="profile-menu is-guest" data-profile-menu>
+            <a class="profile-button" href="login.html">Войти</a>
+            <div class="profile-card">
+                <strong class="profile-card-name" data-profile-name></strong>
+                <span class="profile-card-role">Студент колледжа</span>
+                <dl class="profile-card-details">
+                    <div><dt>Группа</dt><dd data-profile-group></dd></div>
+                    <div><dt>Специальность</dt><dd data-profile-specialty></dd></div>
+                    <div><dt>Курс</dt><dd data-profile-course></dd></div>
+                    <div><dt>Логин</dt><dd data-profile-login></dd></div>
+                </dl>
+                <button class="profile-logout" type="button" data-logout>Выйти из кабинета</button>
+            </div>
+        </div>
+    </header>
+
+<main class="page-background">
+
+<section class="content-section grades-page">
+    <div class="grades-layout">
+        <section class="grades-daily">
+            <h1 class="page-title">Оценки</h1>
+            <div class="grades-date-line"><strong>За день</strong> <span>09.11 - 15.11</span> <button type="button" class="date-arrow pink-arrow" data-message="Другой период пока не добавлен" aria-label="Предыдущий период"><svg class="control-arrow-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6 15 12l-6 6" /></svg></button><button type="button" class="date-arrow pink-arrow" data-message="Другой период пока не добавлен" aria-label="Следующий период"><svg class="control-arrow-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6 15 12l-6 6" /></svg></button></div>
+            <div class="daily-grades-grid"><article class="daily-grade-card"><h2>9 Ноября</h2>
+        <div class="grade-row">
+            <span class="grade-mark">5</span>
+            <strong>Математика</strong>
+            <button class="detail-button" type="button" data-message="9 Ноября: Математика, оценка 5">Подробнее</button>
+        </div>
+
+        <div class="grade-row">
+            <span class="grade-mark">4</span>
+            <strong>Веб-разработка</strong>
+            <button class="detail-button" type="button" data-message="9 Ноября: Веб-разработка, оценка 4">Подробнее</button>
+        </div>
+
+        <div class="grade-row">
+            <span class="grade-mark">5</span>
+            <strong>История</strong>
+            <button class="detail-button" type="button" data-message="9 Ноября: История, оценка 5">Подробнее</button>
+        </div>
+    </article><article class="daily-grade-card"><h2>10 Ноября</h2>
+        <div class="grade-row">
+            <span class="grade-mark">5</span>
+            <strong>История</strong>
+            <button class="detail-button" type="button" data-message="10 Ноября: История, оценка 5">Подробнее</button>
+        </div>
+
+        <div class="grade-row">
+            <span class="grade-mark">4</span>
+            <strong>Русский язык</strong>
+            <button class="detail-button" type="button" data-message="10 Ноября: Русский язык, оценка 4">Подробнее</button>
+        </div>
+
+        <div class="grade-row">
+            <span class="grade-mark">5</span>
+            <strong>Английский</strong>
+            <button class="detail-button" type="button" data-message="10 Ноября: Английский, оценка 5">Подробнее</button>
+        </div>
+    </article><article class="daily-grade-card"><h2>11 Ноября</h2>
+        <div class="grade-row">
+            <span class="grade-mark">4</span>
+            <strong>Математика</strong>
+            <button class="detail-button" type="button" data-message="11 Ноября: Математика, оценка 4">Подробнее</button>
+        </div>
+
+        <div class="grade-row">
+            <span class="grade-mark">4</span>
+            <strong>Веб-разработка</strong>
+            <button class="detail-button" type="button" data-message="11 Ноября: Веб-разработка, оценка 4">Подробнее</button>
+        </div>
+    </article><article class="daily-grade-card"><h2>12 Ноября</h2>
+        <div class="grade-row">
+            <span class="grade-mark">4</span>
+            <strong>Математика</strong>
+            <button class="detail-button" type="button" data-message="12 Ноября: Математика, оценка 4">Подробнее</button>
+        </div>
+    </article></div>
+        </section>
+        <section class="grades-subjects">
+            <h2 class="subject-heading">По <span>предмету</span></h2>
+            <div class="subject-grades-grid">
+        <div class="subject-grade-row">
+            <span class="grade-mark">5</span>
+            <strong>История</strong>
+            <button class="detail-button" type="button" data-message="История: оценка 5">Подробнее</button>
+        </div>
+
+        <div class="subject-grade-row">
+            <span class="grade-mark">4</span>
+            <strong>Математика</strong>
+            <button class="detail-button" type="button" data-message="Математика: оценка 4">Подробнее</button>
+        </div>
+
+        <div class="subject-grade-row">
+            <span class="grade-mark">4</span>
+            <strong>Русский язык</strong>
+            <button class="detail-button" type="button" data-message="Русский язык: оценка 4">Подробнее</button>
+        </div>
+
+        <div class="subject-grade-row">
+            <span class="grade-mark">5</span>
+            <strong>Веб-разработка</strong>
+            <button class="detail-button" type="button" data-message="Веб-разработка: оценка 5">Подробнее</button>
+        </div>
+
+        <div class="subject-grade-row">
+            <span class="grade-mark">5</span>
+            <strong>Английский язык</strong>
+            <button class="detail-button" type="button" data-message="Английский язык: оценка 5">Подробнее</button>
+        </div>
+
+        <div class="subject-grade-row">
+            <span class="grade-mark">4</span>
+            <strong>Химия</strong>
+            <button class="detail-button" type="button" data-message="Химия: оценка 4">Подробнее</button>
+        </div>
+
+        <div class="subject-grade-row">
+            <span class="grade-mark">5</span>
+            <strong>ДУП. 04</strong>
+            <button class="detail-button" type="button" data-message="ДУП. 04: оценка 5">Подробнее</button>
+        </div>
+
+        <div class="subject-grade-row">
+            <span class="grade-mark">5</span>
+            <strong>Осн. диз. мышления.</strong>
+            <button class="detail-button" type="button" data-message="Осн. диз. мышления.: оценка 5">Подробнее</button>
+        </div>
+
+        <div class="subject-grade-row">
+            <span class="grade-mark">5</span>
+            <strong>Биология</strong>
+            <button class="detail-button" type="button" data-message="Биология: оценка 5">Подробнее</button>
+        </div>
+
+        <div class="subject-grade-row">
+            <span class="grade-mark">5</span>
+            <strong>Проектирование инф. рес.</strong>
+            <button class="detail-button" type="button" data-message="Проектирование инф. рес.: оценка 5">Подробнее</button>
+        </div>
+
+        <div class="subject-grade-row">
+            <span class="grade-mark">4</span>
+            <strong>Основы проект. баз.</strong>
+            <button class="detail-button" type="button" data-message="Основы проект. баз.: оценка 4">Подробнее</button>
+        </div>
+
+        <div class="subject-grade-row">
+            <span class="grade-mark">5</span>
+            <strong>Компьютерные сети</strong>
+            <button class="detail-button" type="button" data-message="Компьютерные сети: оценка 5">Подробнее</button>
+        </div>
+    </div>
+        </section>
+    </div>
+</section>
+
+</main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-logo"><span class="logo-square"></span> IT Moscow</div>
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <strong>Общее</strong>
+                    <a href="#" data-message="Раздел пока не подключён">Для родителей</a>
+                    <a href="#" data-message="Раздел пока не подключён">Для учителей</a>
+                    <a href="#" data-message="Раздел пока не подключён">Сотрудничество</a>
+                    <a href="#" data-message="Раздел пока не подключён">Телефонный справочник</a>
+                </div>
+                <div class="footer-column">
+                    <strong>Контакты</strong>
+                    <a href="#" data-message="Раздел пока не подключён">Поддержка и связь</a>
+                    <a href="#" data-message="Раздел пока не подключён">Социальные сети</a>
+                    <a href="#" data-message="Раздел пока не подключён">Личное посещение</a>
+                    <a href="#" data-message="Раздел пока не подключён">Конференции</a>
+                </div>
+                <div class="footer-column">
+                    <strong>Социальные возможности</strong>
+                    <a href="#" data-message="Раздел пока не подключён">Мероприятия для учащихся</a>
+                    <a href="#" data-message="Раздел пока не подключён">Парки Москвы</a>
+                    <a href="#" data-message="Раздел пока не подключён">Льготные программы</a>
+                    <a href="#" data-message="Раздел пока не подключён">Зоопарк</a>
+                </div>
+            </div>
+            <p class="footer-phone">+7 (999) 666 55 33</p>
+        </div>
+    </footer>
+
+<div class="toast" role="status" aria-live="polite" data-toast></div>
+</body>
+</html>
