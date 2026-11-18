@@ -10,7 +10,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scrollbar-gutter: stable; }
+html { scroll-behavior: smooth; }
 body {
     display: flex;
     flex-direction: column;
@@ -161,7 +161,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
         radial-gradient(circle at 58% 77%, var(--circle) 0 170px, transparent 171px),
         radial-gradient(circle at 93% 72%, var(--circle) 0 205px, transparent 206px);
 }
-.content-section { position: relative; z-index: 1; padding: 55px 3.1% 65px; }
+.content-section { position: relative; z-index: 1; padding: 55px 3.1% 0; }
 .page-title {
     margin: 0;
     color: var(--blue);
@@ -285,7 +285,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 }
 .toast.visible { opacity: 1; transform: translateY(0); }
 
-.dashboard-section { position: relative; z-index: 1; padding: 55px 3.1% 42px; }
+.dashboard-section { position: relative; z-index: 1; padding: 55px 3.1% 60px; }
 .dashboard-heading { display: flex; align-items: center; justify-content: space-between; padding: 0 0 28px; }
 .dashboard-heading h1 { margin: 0; color: var(--blue); font-size: clamp(38px, 3.4vw, 64px); font-weight: 800; line-height: 1.12; letter-spacing: -1.5px; }
 .college-status { color: #0b7f28; font-size: 13px; font-weight: 700; }
@@ -352,7 +352,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     position: relative;
     z-index: 1;
     overflow: hidden;
-    padding: 55px 0 45px;
+    padding: 55px 0 0;
     background: linear-gradient(180deg, #5a8de9 0%, #3867b4 53%, #080d18 100%);
     color: white;
 }
@@ -543,9 +543,13 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .login-form > input:focus, .password-wrap input:focus { border-color: var(--blue); outline: 0; }
 .password-wrap { position: relative; }
 .password-wrap input { padding-right: 55px; }
-.password-toggle { position: absolute; top: 14px; right: 9px; width: 35px; height: 30px; border: 0; background: transparent; }
-.eye { position: absolute; top: 9px; left: 8px; width: 17px; height: 11px; border: 1.5px solid #777; border-radius: 80% 20%; transform: rotate(-5deg); }
-.eye::after { content: ""; position: absolute; top: 2px; left: 6px; width: 4px; height: 4px; border: 1px solid #777; border-radius: 50%; }
+.password-toggle { position: absolute; top: 14px; right: 9px; display: flex; align-items: center; justify-content: center; width: 35px; height: 30px; padding: 0; border: 0; border-radius: 8px; background: transparent; cursor: pointer; }
+.password-toggle .eye-icon { display: block; width: 20px; height: 20px; filter: brightness(1); transition: filter .18s ease; }
+.password-toggle:hover .eye-icon { filter: brightness(.65); }
+.password-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.password-toggle .eye-off,
+.password-toggle[aria-pressed="true"] .eye-open { display: none; }
+.password-toggle[aria-pressed="true"] .eye-off { display: block; }
 .login-options { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: -5px 0 27px; color: #666; font-size: 13px; }
 .remember-option { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
 .remember-option input { width: 16px; height: 16px; margin: 0; }
@@ -557,7 +561,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .login-message.is-error { color: #c0392b; }
 .login-form input[aria-invalid="true"] { border-color: #c0392b; }
 
-.schedule-page { padding-top: 52px; padding-bottom: 48px; }
+.schedule-page { padding-top: 52px; padding-bottom: 0; }
 .week-date-heading { display: flex; align-items: center; gap: 8px; margin: 6px 0 25px 3px; color: var(--blue); font-size: clamp(30px, 2.6vw, 48px); font-weight: 800; }
 .week-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .week-card { min-height: 0; padding: 28px 30px 22px; border: 1px solid var(--border); border-radius: 20px; background: rgba(255,255,255,.88); }
@@ -598,13 +602,11 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .streams-note span { color: var(--blue); }
 .streams-note b { color: var(--pink); }
 
-.lunch-page { padding-top: 52px; padding-bottom: 48px; }
+.lunch-page { padding-top: 52px; padding-bottom: 0; }
 .lunch-info { display: flex; align-items: flex-start; gap: 5%; margin: 8px 0 28px; }
-.balance h2, .group-lunch { margin: 0; font-size: clamp(26px, 2.5vw, 48px); line-height: 1.2; }
+.balance h2 { margin: 0; font-size: clamp(26px, 2.5vw, 48px); line-height: 1.2; }
 .top-up-button { min-width: 205px; margin-top: 14px; padding: 8px 20px; border: 1px solid #111; border-radius: 25px; background: transparent; font-size: 20px; transition: color .18s ease, background .18s ease; }
 .top-up-button:hover { background: #111; color: white; }
-.group-lunch { padding-top: 0; }
-.group-lunch span { color: var(--blue); }
 .menu-title { margin: 35px 0 20px; color: var(--pink); font-size: 50px; }
 .menu-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 20px; }
 .menu-card { min-height: 355px; padding: 17px 25px 13px; border: 1px solid var(--border); border-radius: 20px; background: rgba(255,255,255,.9); }
@@ -655,30 +657,30 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     transform: translateY(-2px);
 }
 
-.grades-page { padding-top: 52px; padding-bottom: 48px; }
+.grades-page { padding-top: 52px; padding-bottom: 0; }
 .grades-layout { display: grid; grid-template-columns: 1.2fr .95fr; gap: 4%; }
 .grades-daily { padding-right: 4%; border-right: 1px solid #c8c8c8; }
 .grades-date-line { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 8px 0 28px; font-size: clamp(26px,2.4vw,44px); font-weight: 800; }
 .grades-date-line span { color: var(--pink); }
 .pink-arrow { border-color: var(--pink); color: var(--pink); }
 .pink-arrow:hover { background: var(--pink); color: white; }
-.daily-grades-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px 24px; }
-.daily-grade-card { min-height: 125px; padding: 20px 20px 15px; border: 1px solid var(--border); border-radius: 20px; background: rgba(255,255,255,.88); }
+.daily-grades-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); align-items: start; gap: 16px 24px; }
+.daily-grade-card { padding: 20px 20px 15px; border: 1px solid var(--border); border-radius: 10px; background: rgba(255,255,255,.88); }
 .daily-grade-card h2 { margin: 0 0 8px; font-size: 20px; }
 .grade-row { display: grid; grid-template-columns: 48px minmax(0,1fr) 112px; align-items: center; gap: 10px; min-height: 56px; }
-.grade-mark { display: grid; place-items: center; width: 48px; height: 58px; border: 1px solid #ccc; border-radius: 23px; background: white; color: var(--pink); font-size: 18px; }
+.grade-row + .grade-row { margin-top: 6px; }
+.grade-mark { display: flex; align-items: center; justify-content: center; width: 48px; height: 58px; padding: 2px 0 0; border: 1px solid #ccc; border-radius: 10px; background: white; color: var(--pink); font-size: 26px; font-weight: 600; line-height: 1; font-variant-numeric: tabular-nums; }
 .grade-row strong, .subject-grade-row strong { font-size: 18px; }
 .grade-row .detail-button { min-width: 0; padding: 5px 8px; }
 .subject-heading { margin: 86px 0 28px; font-size: 46px; text-align: right; }
 .subject-heading span { color: var(--blue); }
-.subject-grades-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px 18px; }
-.subject-grade-row { display: grid; grid-template-columns: 42px minmax(0,1fr) 112px; align-items: center; gap: 10px; min-height: 86px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 20px; background: rgba(255,255,255,.88); }
+.subject-grades-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); align-items: start; gap: 14px 18px; }
+.subject-grade-row { display: grid; grid-template-columns: 42px minmax(0,1fr) 112px; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; background: rgba(255,255,255,.88); }
 .subject-grade-row .grade-mark { width: 42px; height: 58px; }
 .subject-grade-row strong { font-size: 16px; line-height: 1.15; }
 .subject-grade-row .detail-button { min-width: 0; padding: 5px 7px; }
 
 @media screen and (min-width: 1920px) and (min-height: 1080px) {
-    .dashboard-section { padding-bottom: 38px; }
     .today-lesson { min-height: 72px; }
     .detail-button { min-width: 145px; min-height: 40px; }
 }
@@ -719,7 +721,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     .profile-button { min-width: 92px; padding: 7px 8px; font-size: 12px; }
     .nav-link { padding: 6px 8px; font-size: 12px; }
 
-    .dashboard-section { padding: 35px 14px 35px; }
+    .dashboard-section { padding: 35px 14px 0; }
     .dashboard-heading { padding: 0 0 18px; }
     .dashboard-heading h1 { font-size: 34px; }
     .college-status { font-size: 10px; }
@@ -752,7 +754,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     .news-arrow .control-arrow-svg { width: 17px; height: 17px; flex-basis: 17px; }
     .news-open-button { width: 220px; font-size: 15px; }
 
-    .content-section { padding: 35px 14px 45px; }
+    .content-section { padding: 35px 14px 0; }
     .page-title { font-size: 34px; }
     .week-date-heading { font-size: 28px; }
     .date-arrow { flex-basis: 35px; width: 35px; height: 35px; }
@@ -778,7 +780,6 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     .stream-card p { font-size: 16px; }
 
     .lunch-info { flex-direction: column; gap: 20px; }
-    .balance h2, .group-lunch { font-size: 25px; }
     .menu-title { font-size: 38px; }
     .lunch-page .menu-grid { grid-template-columns: minmax(0,1fr); }
     .lunch-page .menu-grid > .menu-card { min-height: 355px; padding: 17px 20px; }
