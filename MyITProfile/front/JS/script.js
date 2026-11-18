@@ -31,8 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Демо-авторизация. Сайт статический, сервера нет, поэтому учётные данные
-    // лежат прямо в файле. Для боевой версии пароли должен проверять сервер.
     const STUDENT_ACCOUNTS = [
         {
             login: "demekhin",
@@ -158,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.target.closest("[data-logout]")) {
             clearSession();
             updateProfileMenu(null);
-            showMessage("Вы вышли из кабинета");
+            window.location.href = "index.html";
             return;
         }
 
@@ -230,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setLoginMessage("Вход выполнен. Открываем дневник…", false);
 
             setTimeout(function () {
-                window.location.href = "index.html";
+                window.location.href = "main.html";
             }, 650);
         });
     }
