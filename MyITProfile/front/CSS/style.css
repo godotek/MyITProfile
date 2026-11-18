@@ -161,7 +161,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
         radial-gradient(circle at 58% 77%, var(--circle) 0 170px, transparent 171px),
         radial-gradient(circle at 93% 72%, var(--circle) 0 205px, transparent 206px);
 }
-.content-section { position: relative; z-index: 1; padding: 55px 3.1% 0; }
+.content-section { position: relative; z-index: 1; padding: 55px 3.1% 55px; }
 .page-title {
     margin: 0;
     color: var(--blue);
@@ -285,7 +285,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 }
 .toast.visible { opacity: 1; transform: translateY(0); }
 
-.dashboard-section { position: relative; z-index: 1; padding: 55px 3.1% 60px; }
+.dashboard-section { position: relative; z-index: 1; padding: 55px 3.1% 55px; }
 .dashboard-heading { display: flex; align-items: center; justify-content: space-between; padding: 0 0 28px; }
 .dashboard-heading h1 { margin: 0; color: var(--blue); font-size: clamp(38px, 3.4vw, 64px); font-weight: 800; line-height: 1.12; letter-spacing: -1.5px; }
 .college-status { color: #0b7f28; font-size: 13px; font-weight: 700; }
@@ -307,6 +307,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .texture-yellow { background: linear-gradient(140deg, #e2d400, #c9bb00); color: white; }
 .texture-pink::after, .texture-yellow::after {
     content: ""; position: absolute; z-index: -1; inset: 0; opacity: .3; pointer-events: none;
+    border-radius: inherit;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
 }
 .lunch-mini { padding: 22px; }
@@ -561,7 +562,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .login-message.is-error { color: #c0392b; }
 .login-form input[aria-invalid="true"] { border-color: #c0392b; }
 
-.schedule-page { padding-top: 52px; padding-bottom: 0; }
+.schedule-page { padding-top: 52px; }
 .week-date-heading { display: flex; align-items: center; gap: 8px; margin: 6px 0 25px 3px; color: var(--blue); font-size: clamp(30px, 2.6vw, 48px); font-weight: 800; }
 .week-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .week-card { min-height: 0; padding: 28px 30px 22px; border: 1px solid var(--border); border-radius: 20px; background: rgba(255,255,255,.88); }
@@ -602,11 +603,13 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .streams-note span { color: var(--blue); }
 .streams-note b { color: var(--pink); }
 
-.lunch-page { padding-top: 52px; padding-bottom: 0; }
+.lunch-page { padding-top: 52px; }
 .lunch-info { display: flex; align-items: flex-start; gap: 5%; margin: 8px 0 28px; }
-.balance h2 { margin: 0; font-size: clamp(26px, 2.5vw, 48px); line-height: 1.2; }
+.balance h2, .group-lunch { margin: 0; font-size: clamp(26px, 2.5vw, 48px); line-height: 1.2; }
 .top-up-button { min-width: 205px; margin-top: 14px; padding: 8px 20px; border: 1px solid #111; border-radius: 25px; background: transparent; font-size: 20px; transition: color .18s ease, background .18s ease; }
 .top-up-button:hover { background: #111; color: white; }
+.group-lunch { padding-top: 0; }
+.group-lunch span { color: var(--blue); }
 .menu-title { margin: 35px 0 20px; color: var(--pink); font-size: 50px; }
 .menu-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 20px; }
 .menu-card { min-height: 355px; padding: 17px 25px 13px; border: 1px solid var(--border); border-radius: 20px; background: rgba(255,255,255,.9); }
@@ -624,9 +627,10 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     flex-direction: column;
     min-width: 0;
     min-height: 355px;
+    padding-bottom: 24px;
 }
 .lunch-page .menu-items { flex: 0 0 auto; }
-.lunch-page .menu-pay-button { align-self: center; transition: color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease; }
+.lunch-page .menu-pay-button { align-self: center; margin-top: auto; transition: color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease; }
 .lunch-page .menu-divider {
     width: 100%;
     height: 1px;
@@ -657,7 +661,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     transform: translateY(-2px);
 }
 
-.grades-page { padding-top: 52px; padding-bottom: 0; }
+.grades-page { padding-top: 52px; }
 .grades-layout { display: grid; grid-template-columns: 1.2fr .95fr; gap: 4%; }
 .grades-daily { padding-right: 4%; border-right: 1px solid #c8c8c8; }
 .grades-date-line { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 8px 0 28px; font-size: clamp(26px,2.4vw,44px); font-weight: 800; }
@@ -721,7 +725,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     .profile-button { min-width: 92px; padding: 7px 8px; font-size: 12px; }
     .nav-link { padding: 6px 8px; font-size: 12px; }
 
-    .dashboard-section { padding: 35px 14px 0; }
+    .dashboard-section { padding: 35px 14px 35px; }
     .dashboard-heading { padding: 0 0 18px; }
     .dashboard-heading h1 { font-size: 34px; }
     .college-status { font-size: 10px; }
@@ -754,7 +758,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     .news-arrow .control-arrow-svg { width: 17px; height: 17px; flex-basis: 17px; }
     .news-open-button { width: 220px; font-size: 15px; }
 
-    .content-section { padding: 35px 14px 0; }
+    .content-section { padding: 35px 14px 35px; }
     .page-title { font-size: 34px; }
     .week-date-heading { font-size: 28px; }
     .date-arrow { flex-basis: 35px; width: 35px; height: 35px; }
@@ -780,9 +784,10 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     .stream-card p { font-size: 16px; }
 
     .lunch-info { flex-direction: column; gap: 20px; }
+    .balance h2, .group-lunch { font-size: 25px; }
     .menu-title { font-size: 38px; }
     .lunch-page .menu-grid { grid-template-columns: minmax(0,1fr); }
-    .lunch-page .menu-grid > .menu-card { min-height: 355px; padding: 17px 20px; }
+    .lunch-page .menu-grid > .menu-card { min-height: 355px; padding: 17px 20px 24px; }
     .menu-items p { font-size: 18px; }
     .menu-items small { font-size: 15px; }
 
