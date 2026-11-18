@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.target.closest("[data-logout]")) {
             clearSession();
             updateProfileMenu(null);
-            window.location.href = "login.html";
+            window.location.href = "index.html";
             return;
         }
 
@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setLoginMessage("Вход выполнен. Открываем дневник…", false);
 
             setTimeout(function () {
-                window.location.href = "index.html";
+                window.location.href = "main.html";
             }, 650);
         });
     }
