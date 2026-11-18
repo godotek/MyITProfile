@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Личный кабинет студента IT Moscow: расписание на сегодня, звонки, меню столовой и оценки.">
-    <title>Главная | IT Moscow</title>
+    <meta name="description" content="Вход в личный кабинет студента IT Moscow: расписание, звонки, обеды и оценки.">
+    <title>Вход | IT Moscow</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
-<body>
-
-    <header class="site-header">
-        <a class="logo" href="index.html"><span class="logo-square"></span> IT Moscow</a>
-        <nav class="main-nav" aria-label="Главная навигация"><a class="nav-link active" href="index.html">Главная</a><a class="nav-link" href="schedule.html">Расписание</a><a class="nav-link" href="bells.html">Звонки</a><a class="nav-link" href="lunch.html">Обеды</a><a class="nav-link" href="grades.html">Оценки</a></nav>
+<body class="login-page">
+    <header class="login-header">
+        <span class="logo"><span class="logo-square"></span> IT Moscow</span>
         <div class="profile-menu is-guest" data-profile-menu>
             <a class="profile-button" href="login.html">Войти</a>
             <div class="profile-card">
@@ -30,178 +28,41 @@
         </div>
     </header>
 
-<main class="page-background">
-
-<section class="dashboard-section">
-    <div class="dashboard-heading">
-        <h1>Мой дневник</h1>
-        <span class="college-status">В колледже</span>
-    </div>
-
-    <div class="dashboard-grid">
-        <section class="today-card dashboard-card">
-            <h2><svg class="clock-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" /><path d="M12 7.5V12l3 1.8" /></svg>Сегодня</h2>
-            <div class="today-lessons">
-                <div class="today-lesson">
-                    <div class="lesson-time"><span>9:30-11:00</span><small class="lesson-name">История · 403 каб.</small></div>
-                    <a class="detail-button" href="schedule.html">Подробнее</a>
-                </div>
-                <div class="today-lesson">
-                    <div class="lesson-time"><span>11:30-13:00</span><small class="lesson-name">Русский язык · 313 каб.</small></div>
-                    <a class="detail-button" href="schedule.html">Подробнее</a>
-                </div>
-                <div class="today-lesson current">
-                    <div class="lesson-time"><span>13:20-14:50</span><small class="lesson-name">Веб-разработка · 120 каб.</small><small>Сейчас идет</small></div>
-                    <a class="detail-button" href="schedule.html">Подробнее</a>
-                </div>
-            </div>
+    <main class="login-main">
+        <section class="login-promo">
+            <p class="login-eyebrow">IT MOSCOW</p>
+            <h1>Всё важное<br>в <span>одном</span> месте</h1>
+            <p>Расписание занятий, информация об аудиториях<br class="desktop-only"> и обедах - в личном кабинете студента.</p>
         </section>
 
-        <section class="lunch-mini dashboard-card texture-pink">
-            <h2><svg class="mini-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
-                <path d="M7 2v20" />
-                <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
-            </svg>Обед</h2>
-            <div class="lunch-mini-time"><strong>2 перемена</strong><span>11:00-11:30</span></div>
-            <div class="lunch-mini-menu">
-                <div><strong>Картошка</strong><strong>Хот-дог</strong><strong>Сок Яблочный</strong></div>
-                <strong class="lunch-mini-price">300р.</strong>
-                <button class="pay-mini-button" type="button" data-message="Оплата будет доступна после подключения платёжной системы">Оплатить</button>
-            </div>
-            <a class="white-button mini-menu-button" href="lunch.html">Полное меню</a>
+        <section class="login-card">
+            <h2>Вход в кабинет</h2>
+            <p class="login-description">Используйте учётные данные, выданные колледжем.</p>
+            <form class="login-form" data-login-form>
+                <label for="student-login">Логин студента</label>
+                <input id="student-login" name="login" type="text" placeholder="Введите логин" autocomplete="username" required>
+
+                <label for="student-password">Пароль</label>
+                <div class="password-wrap">
+                    <input id="student-password" name="password" type="password" placeholder="Введите пароль" autocomplete="current-password" required>
+                    <button class="password-toggle" type="button" data-password-toggle aria-label="Показать пароль" aria-pressed="false">
+                        <img class="eye-icon eye-open" src="assets/icons/eye.svg" alt="" width="20" height="20" aria-hidden="true">
+                        <img class="eye-icon eye-off" src="assets/icons/eye-off.svg" alt="" width="20" height="20" aria-hidden="true">
+                    </button>
+                </div>
+
+                <div class="login-options">
+                    <label class="remember-option"><input type="checkbox" name="remember"> <span>Запомнить меня</span></label>
+                    <a href="#" data-message="Для восстановления доступа обратитесь в учебную часть">Не получается войти?</a>
+                </div>
+
+                <button class="login-submit" type="submit">Войти</button>
+                <p class="login-message" data-login-message role="status" aria-live="polite"></p>
+            </form>
+
+            <p class="login-bottom">Доступ предоставляется студентам колледжа.<br>По вопросам входа обратитесь в учебную часть.</p>
         </section>
-
-        <section class="bells-mini dashboard-card texture-yellow">
-            <h2><svg class="mini-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M10.268 21a2 2 0 0 0 3.464 0" />
-                <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
-            </svg>Звонки</h2>
-            <div class="bells-mini-content">
-                <div>
-                    <strong>На пару:</strong>
-                    <span>9:30</span><span>11:30</span><span>13:20</span><span>15:10</span><span>17:00</span>
-                </div>
-                <div>
-                    <strong>На перемену:</strong>
-                    <span>11:00</span><span>13:00</span><span>14:50</span><span>16:40</span><span>18:30</span>
-                </div>
-            </div>
-            <a class="detail-button bells-detail-button" href="bells.html">Подробнее</a>
-            <div class="bells-mini-photo"></div>
-        </section>
-    </div>
-</section>
-
-<section class="news-section">
-    <div class="news-title-row">
-        <h2>Новости</h2>
-        <div class="news-tabs" role="group" aria-label="Слайды новостей">
-            <button class="news-tab" type="button" data-slide="0" aria-label="Слайд 1" aria-pressed="false"></button>
-            <button class="news-tab" type="button" data-slide="1" aria-label="Слайд 2" aria-pressed="false"></button>
-            <button class="news-tab active" type="button" data-slide="2" aria-label="Слайд 3" aria-pressed="true"></button>
-            <button class="news-tab" type="button" data-slide="3" aria-label="Слайд 4" aria-pressed="false"></button>
-            <button class="news-tab" type="button" data-slide="4" aria-label="Слайд 5" aria-pressed="false"></button>
-        </div>
-    </div>
-
-    <div class="news-slider-shell">
-        <button class="news-arrow news-arrow-prev" type="button" data-news-prev aria-label="Предыдущая новость"><svg class="control-arrow-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6 15 12l-6 6" /></svg></button>
-        <div class="news-slider" data-news-slider>
-            <div class="news-track">
-                <article class="news-card" data-news-card="0" data-position="hidden">
-                    <img src="assets/news-tour.png" alt="Студенты на производственной экскурсии" loading="lazy" decoding="async">
-                    <span class="news-category">ЭКСКУРСИИ</span>
-                    <div class="news-card-content">
-                        <small>10 ноября</small>
-                        <h3>Профессия<br>изнутри</h3>
-                        <p>Побывали на современном производстве и узнали, как работают инженеры.</p>
-                        <a href="#" data-message="Новость пока недоступна">Читать историю ↗</a>
-                    </div>
-                </article>
-
-                <article class="news-card" data-news-card="1" data-position="left">
-                    <img src="assets/news-festival.png" alt="Студенты на фестивале идей" decoding="async">
-                    <span class="news-category">МЕРОПРИЯТИЯ</span>
-                    <div class="news-card-content">
-                        <small>12 ноября</small>
-                        <h3>Фестиваль<br>студенческих идей</h3>
-                        <p>Проекты, мастер-классы и новые знакомства. Собрали яркие моменты большого дня.</p>
-                        <a href="#" data-message="Новость пока недоступна">Читать историю ↗</a>
-                    </div>
-                </article>
-
-                <article class="news-card active" data-news-card="2" data-position="center">
-                    <img src="assets/news-media.png" alt="Студенческая медиастудия" loading="lazy" decoding="async">
-                    <span class="news-category">КРУЖКИ</span>
-                    <div class="news-card-content">
-                        <small>Набор открыт</small>
-                        <h3>Твоя история -<br>в кадре</h3>
-                        <p>Съёмка, монтаж и первые репортажи. Присоединяйся к нашей медиастудии.</p>
-                        <a href="#" data-message="Новость пока недоступна">Читать историю ↗</a>
-                    </div>
-                </article>
-
-                <article class="news-card" data-news-card="3" data-position="right">
-                    <img src="assets/news-hackathon.jpg" alt="Команда студентов празднует победу на хакатоне" loading="lazy" decoding="async">
-                    <span class="news-category">ПРОЕКТЫ</span>
-                    <div class="news-card-content">
-                        <small>18 ноября</small>
-                        <h3>Победа<br>на хакатоне</h3>
-                        <p>48 часов, пять команд и лучший прототип. Наши студенты забрали первое место.</p>
-                        <a href="#" data-message="Новость пока недоступна">Читать историю ↗</a>
-                    </div>
-                </article>
-
-                <article class="news-card" data-news-card="4" data-position="hidden">
-                    <img src="assets/news-esports.jpg" alt="Студенты на финале турнира по киберспорту" loading="lazy" decoding="async">
-                    <span class="news-category">КИБЕРСПОРТ</span>
-                    <div class="news-card-content">
-                        <small>21 ноября</small>
-                        <h3>Финал<br>сезона</h3>
-                        <p>Сборная колледжа провела решающие матчи и взяла кубок городского турнира.</p>
-                        <a href="#" data-message="Новость пока недоступна">Читать историю ↗</a>
-                    </div>
-                </article>
-            </div>
-        </div>
-        <button class="news-arrow news-arrow-next" type="button" data-news-next aria-label="Следующая новость"><svg class="control-arrow-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6 15 12l-6 6" /></svg></button>
-    </div>
-    <a class="news-open-button" href="#" data-message="Лента новостей пока не подключена">Открыть ленту</a>
-</section>
-
-</main>
-
-    <footer class="site-footer footer-dark">
-        <div class="footer-inner">
-            <div class="footer-logo"><span class="logo-square"></span> IT Moscow</div>
-            <div class="footer-columns">
-                <div class="footer-column">
-                    <strong>Общее</strong>
-                    <a href="#" data-message="Раздел пока не подключён">Для родителей</a>
-                    <a href="#" data-message="Раздел пока не подключён">Для учителей</a>
-                    <a href="#" data-message="Раздел пока не подключён">Сотрудничество</a>
-                    <a href="#" data-message="Раздел пока не подключён">Телефонный справочник</a>
-                </div>
-                <div class="footer-column">
-                    <strong>Контакты</strong>
-                    <a href="#" data-message="Раздел пока не подключён">Поддержка и связь</a>
-                    <a href="#" data-message="Раздел пока не подключён">Социальные сети</a>
-                    <a href="#" data-message="Раздел пока не подключён">Личное посещение</a>
-                    <a href="#" data-message="Раздел пока не подключён">Конференции</a>
-                </div>
-                <div class="footer-column">
-                    <strong>Социальные возможности</strong>
-                    <a href="#" data-message="Раздел пока не подключён">Мероприятия для учащихся</a>
-                    <a href="#" data-message="Раздел пока не подключён">Парки Москвы</a>
-                    <a href="#" data-message="Раздел пока не подключён">Льготные программы</a>
-                    <a href="#" data-message="Раздел пока не подключён">Зоопарк</a>
-                </div>
-            </div>
-            <p class="footer-phone">+7 (999) 666 55 33</p>
-        </div>
-    </footer>
-
-<div class="toast" role="status" aria-live="polite" data-toast></div>
+    </main>
+    <div class="toast" role="status" aria-live="polite" data-toast></div>
 </body>
 </html>
