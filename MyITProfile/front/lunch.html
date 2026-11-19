@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Меню столовой IT Moscow, стоимость обедов и баланс карты студента.">
     <title>Обеды | IT Moscow</title>
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
@@ -43,7 +42,7 @@
     </div>
     <h2 class="menu-title">Меню</h2>
     <div class="menu-grid">
-    <article class="menu-card ">
+    <article class="menu-card " data-menu="italian">
         <h2>Итальянское</h2>
         <div class="menu-items">
             <p><span>Пицца</span><small>300 гр.</small></p>
@@ -53,10 +52,10 @@
         </div>
         <div class="menu-divider"></div>
         <strong class="menu-total">320р.</strong>
-        <button class="menu-pay-button" type="button" data-message="Оплата будет доступна после подключения платёжной системы">Оплатить</button>
+        <button class="menu-pay-button" type="button">Оплатить</button>
     </article>
 
-    <article class="menu-card texture-pink">
+    <article class="menu-card texture-pink" data-menu="american">
         <h2>Американское</h2>
         <div class="menu-items">
             <p><span>Хот-дог</span><small>300 гр.</small></p>
@@ -66,10 +65,10 @@
         </div>
         <div class="menu-divider"></div>
         <strong class="menu-total">300р.</strong>
-        <button class="menu-pay-button" type="button" data-message="Оплата будет доступна после подключения платёжной системы">Оплатить</button>
+        <button class="menu-pay-button" type="button">Оплатить</button>
     </article>
 
-    <article class="menu-card ">
+    <article class="menu-card " data-menu="russian">
         <h2>Русское</h2>
         <div class="menu-items">
             <p><span>Пельмени</span><small>300 гр.</small></p>
@@ -79,10 +78,10 @@
         </div>
         <div class="menu-divider"></div>
         <strong class="menu-total">310р.</strong>
-        <button class="menu-pay-button" type="button" data-message="Оплата будет доступна после подключения платёжной системы">Оплатить</button>
+        <button class="menu-pay-button" type="button">Оплатить</button>
     </article>
 
-    <article class="menu-card texture-yellow">
+    <article class="menu-card texture-yellow" data-menu="eastern">
         <h2>Восточное</h2>
         <div class="menu-items">
             <p><span>Шаурма куриная</span><small>300 гр.</small></p>
@@ -92,7 +91,7 @@
         </div>
         <div class="menu-divider"></div>
         <strong class="menu-total">320р.</strong>
-        <button class="menu-pay-button" type="button" data-message="Оплата будет доступна после подключения платёжной системы">Оплатить</button>
+        <button class="menu-pay-button" type="button">Оплатить</button>
     </article>
     </div>
 </section>
