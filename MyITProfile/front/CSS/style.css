@@ -269,7 +269,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 }
 .toast {
     position: fixed;
-    z-index: 30;
+    z-index: 80;
     right: 22px;
     bottom: 22px;
     max-width: 340px;
@@ -684,6 +684,170 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .subject-grade-row strong { font-size: 16px; line-height: 1.15; }
 .subject-grade-row .detail-button { min-width: 0; padding: 5px 7px; }
 
+/* ----------------- Модальные окна ----------------- */
+body.modal-open { overflow: hidden; }
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    background: rgba(24,29,38,.52);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    overflow-y: auto;
+    transition: opacity .18s ease;
+}
+.modal-overlay[hidden] { display: none; }
+.modal-overlay.is-open { opacity: 1; }
+.modal-shell {
+    width: min(100%, 920px);
+    margin: auto;
+    transform: translateY(14px) scale(.985);
+    transition: transform .22s cubic-bezier(.2,.7,.3,1);
+}
+.modal-overlay.is-open .modal-shell { transform: translateY(0) scale(1); }
+.modal-card {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) 250px;
+    grid-template-rows: minmax(0, 1fr);
+    min-height: 480px;
+    max-height: min(74vh, 700px);
+    border-radius: 18px;
+    overflow: hidden;
+    background: #f6f7fb;
+    box-shadow: 0 32px 80px rgba(8,16,32,.38);
+}
+.modal-main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.modal-card:focus { outline: none; }
+.modal-head {
+    flex: 0 0 auto;
+    padding: 24px 34px 22px;
+    background: linear-gradient(120deg, #4f80e2 0%, #3d6cd0 100%);
+    color: #fff;
+}
+.modal-head.is-pink { background: linear-gradient(120deg, #f063b6 0%, #dd4a9f 100%); }
+.modal-head h2 { margin: 0 0 6px; color: #fff; font-size: 30px; font-weight: 800; line-height: 1.1; letter-spacing: -.6px; }
+.modal-subtitle { margin: 0; color: rgba(255,255,255,.94); font-size: 17px; line-height: 1.3; }
+.modal-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 20px 30px 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #b9bfcc transparent;
+}
+.modal-body::-webkit-scrollbar { width: 7px; }
+.modal-body::-webkit-scrollbar-track { border-radius: 8px; background: rgba(20,35,65,.05); }
+.modal-body::-webkit-scrollbar-thumb { border-radius: 8px; background: #c2c8d4; }
+.modal-footer {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 15px 30px 18px;
+    border-top: 1px solid #e2e5ec;
+    background: #fff;
+    color: #545a67;
+    font-size: 15px;
+}
+.modal-footer[hidden] { display: none; }
+.modal-summary-value { color: var(--blue-dark); font-size: 24px; font-weight: 800; }
+.modal-visual {
+    position: relative;
+    overflow: hidden;
+    background: #10151f center / cover no-repeat;
+}
+.modal-visual.is-code { background-image: url("assets/modal-code.jpg"); }
+.modal-visual.is-study { background-image: url("assets/modal-study.jpg"); background-position: center 42%; }
+.modal-visual.is-food { background-image: url("assets/modal-food.jpg"); }
+.modal-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(8,13,22,.05) 0%, rgba(8,13,22,.18) 55%, rgba(8,13,22,.42) 100%);
+    pointer-events: none;
+}
+.modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 62px;
+    height: 62px;
+    margin: 20px auto 0;
+    padding: 0;
+    border: 0;
+    border-radius: 18px;
+    background: #fff;
+    color: #111;
+    box-shadow: 0 12px 30px rgba(8,16,32,.32);
+    transition: transform .16s ease;
+}
+.modal-close:hover { transform: translateY(-2px); }
+.modal-close svg { width: 26px; height: 26px; }
+.modal-close path { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; }
+
+.modal-field + .modal-field { margin-top: 16px; }
+.modal-label { display: block; margin: 0 0 8px; color: #8a90a0; font-size: 12px; letter-spacing: .02em; }
+.modal-label-spaced { margin-top: 18px; }
+.modal-box {
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 7px rgba(20,35,65,.06);
+    color: #1c1f26;
+    font-size: 16px;
+    line-height: 1.45;
+}
+.semester-card { padding: 15px 18px 18px; border-radius: 14px; background: #fff; box-shadow: 0 2px 7px rgba(20,35,65,.06); }
+.semester-card + .semester-card { margin-top: 12px; }
+.semester-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 13px; }
+.semester-head strong { display: block; font-size: 17px; }
+.semester-head small { display: block; margin-top: 3px; color: #8a90a0; font-size: 12px; }
+.semester-average { text-align: right; }
+.semester-average strong { display: block; font-size: 22px; line-height: 1.05; }
+.semester-average small { display: block; margin-top: 2px; color: #8a90a0; font-size: 11px; white-space: nowrap; }
+.modal-marks { display: flex; flex-wrap: wrap; gap: 9px; }
+.modal-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: #f1f2f6;
+    font-size: 21px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+.modal-mark.is-low { color: var(--pink); }
+.modal-menu-list { padding: 4px 18px; }
+.modal-menu-list p { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin: 0; padding: 12px 0; font-size: 16px; }
+.modal-menu-list p + p { border-top: 1px solid #eef0f4; }
+.modal-menu-list small { color: #6f6f6f; font-size: 14px; white-space: nowrap; }
+.modal-menu-facts { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0 20px; margin-top: 16px; }
+.modal-menu-facts p { display: flex; justify-content: space-between; gap: 10px; margin: 0; padding: 8px 0; border-bottom: 1px dashed #dfe2e9; font-size: 13px; }
+.modal-menu-facts span { color: #8a90a0; }
+.modal-menu-facts strong { font-weight: 600; }
+.modal-allergens { margin: 0; color: #545a67; font-size: 14px; }
+.modal-note { margin: 16px 0 0; padding: 12px 14px; border-radius: 12px; background: #fdf0f8; color: #a8397a; font-size: 13px; line-height: 1.4; }
+.modal-pay-button {
+    min-width: 165px;
+    padding: 9px 24px;
+    border: 1px solid #111;
+    border-radius: 25px;
+    background: transparent;
+    font-size: 17px;
+    transition: color .18s ease, background .18s ease;
+}
+.modal-pay-button:hover { background: #111; color: #fff; }
+.modal-total { margin: 0; font-size: 16px; }
+.modal-total strong { font-size: 18px; }
+
 @media screen and (min-width: 1920px) and (min-height: 1080px) {
     .today-lesson { min-height: 72px; }
     .detail-button { min-width: 145px; min-height: 40px; }
@@ -821,4 +985,29 @@ button:focus-visible, a:focus-visible, input:focus-visible {
     .login-card h2 { font-size: 24px; }
     .login-bottom { margin-top: 30px; font-size: 10px; }
     .login-options { font-size: 11px; }
+}
+
+@media screen and (max-width: 960px) {
+    .modal-card { grid-template-columns: minmax(0,1fr); min-height: 0; max-height: 78vh; }
+    .modal-visual { display: none; }
+}
+
+@media screen and (max-width: 620px) {
+    .modal-overlay { padding: 14px 12px 24px; }
+    .modal-shell { width: 100%; }
+    .modal-card { max-height: 80vh; border-radius: 16px; }
+    .modal-head { padding: 20px 20px 18px; }
+    .modal-head h2 { font-size: 23px; }
+    .modal-subtitle { font-size: 14px; }
+    .modal-body { padding: 16px 16px 20px; }
+    .modal-footer { padding: 13px 16px 16px; font-size: 13px; }
+    .modal-summary-value { font-size: 20px; }
+    .semester-card { padding: 13px 14px 15px; }
+    .semester-head strong { font-size: 15px; }
+    .semester-average strong { font-size: 19px; }
+    .modal-mark { width: 42px; height: 44px; font-size: 18px; }
+    .modal-menu-facts { grid-template-columns: minmax(0,1fr); }
+    .modal-pay-button { min-width: 128px; padding: 8px 18px; font-size: 15px; }
+    .modal-close { width: 52px; height: 52px; margin-top: 14px; border-radius: 15px; }
+    .modal-close svg { width: 22px; height: 22px; }
 }
