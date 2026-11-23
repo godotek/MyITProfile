@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Расписание занятий студента IT Moscow на неделю: пары, аудитории и перемены.">
     <title>Расписание | IT Moscow</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/site-data.js" defer></script>
+    <script src="js/script.js" defer></script>
 </head>
 <body>
 
@@ -32,44 +34,44 @@
 <main class="page-background">
 
 <section class="content-section schedule-page">
-    <h1 class="page-title">Расписание на неделю</h1>
+    <h1 class="page-title">Расписание<span class="title-suffix"> на неделю</span></h1>
     <div class="week-date-heading"><span>09.11-15.11</span><button type="button" class="date-arrow" data-message="Другие недели пока не добавлены" aria-label="Предыдущая неделя"><svg class="control-arrow-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6 15 12l-6 6" /></svg></button><button type="button" class="date-arrow" data-message="Другие недели пока не добавлены" aria-label="Следующая неделя"><svg class="control-arrow-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6 15 12l-6 6" /></svg></button></div>
     <div class="week-grid">
         <article class="week-card">
             <h2>Понедельник</h2>
 
             <div class="week-lesson">
-                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
+                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span> <span class="task-item"><b>3</b> <span class="task-do">для выполнения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span></span></p></div><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
             <div class="week-lesson">
-                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Английский<small>313 каб.</small></span><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
+                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Английский<small>313 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span></span></p></div><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
             <div class="week-lesson">
-                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span></div>
+                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span></span></p></div></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
         </article>
 
-        <article class="week-card">
+        <article class="week-card is-today">
             <h2>Вторник</h2>
 
             <div class="week-lesson">
-                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
+                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span></span></p></div><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
             <div class="week-lesson">
-                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Русский язык<small>313 каб.</small></span><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
+                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Русский язык<small>313 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span> <span class="task-item"><b>1</b> <span class="task-do">для выполнения</span></span></span></p></div><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
-            <div class="week-lesson">
-                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span><small class="lesson-now">Сейчас идет</small></div>
+            <div class="week-lesson is-highlighted">
+                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span> <span class="task-item"><b>3</b> <span class="task-do">для выполнения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span></span></p></div><small class="lesson-now">Сейчас идет</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
@@ -79,17 +81,17 @@
             <h2>Среда</h2>
 
             <div class="week-lesson">
-                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
+                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span> <span class="task-item"><b>2</b> <span class="task-do">для выполнения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span></span></p></div><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
             <div class="week-lesson">
-                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Веб-разработка<small>313 каб.</small></span><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
+                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Веб-разработка<small>313 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span></span></p></div><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
             <div class="week-lesson">
-                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span></div>
+                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span> <span class="task-item"><b>1</b> <span class="task-do">для выполнения</span></span></span></p></div></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
@@ -99,17 +101,17 @@
             <h2>Четверг</h2>
 
             <div class="week-lesson">
-                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
+                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span> <span class="task-item"><b>3</b> <span class="task-do">для выполнения</span></span></span></p></div><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
             <div class="week-lesson">
-                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Веб-разработка<small>313 каб.</small></span><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
+                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Веб-разработка<small>313 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span> <span class="task-item"><b>2</b> <span class="task-do">для выполнения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span> <span class="task-item"><b>3</b> <span class="task-do">для выполнения</span></span></span></p></div><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
             <div class="week-lesson">
-                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span></div>
+                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span></span></p></div></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
@@ -119,17 +121,17 @@
             <h2>Пятница</h2>
 
             <div class="week-lesson">
-                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
+                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span></span></p></div><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
             <div class="week-lesson">
-                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Веб-разработка<small>313 каб.</small></span><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
+                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Веб-разработка<small>313 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span></span></p></div><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
             <div class="week-lesson">
-                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span></div>
+                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span></span></p></div></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
@@ -139,20 +141,25 @@
             <h2>Суббота <span>(Дистанционные занятия)</span></h2>
 
             <div class="week-lesson">
-                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
+                <div class="week-time"><span>9:30-11:00</span><span class="week-subject">История<small>403 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span></span></p></div><small class="lesson-break">Перемена:<br>11:00-11:30</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
             <div class="week-lesson">
-                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Веб-разработка<small>313 каб.</small></span><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
+                <div class="week-time"><span>11:30-13:00</span><span class="week-subject">Веб-разработка<small>313 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>3</b> <span class="task-study">для изучения</span></span> <span class="task-item"><b>3</b> <span class="task-do">для выполнения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span></span></p></div><small class="lesson-break">Перемена:<br>13:00-13:20</small></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
             <div class="week-lesson">
-                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span></div>
+                <div class="week-time"><span>13:20-14:50</span><span class="week-subject">Веб-разработка<small>120 каб.</small></span><div class="week-tasks"><p class="task-group"><span class="task-label">К ознакомлению:</span><span class="task-items"><span class="task-item"><b>2</b> <span class="task-study">для изучения</span></span></span></p><p class="task-group"><span class="task-label">Домашнее задание:</span><span class="task-items"><span class="task-item"><b>1</b> <span class="task-study">для изучения</span></span></span></p></div></div>
                 <button class="detail-button" type="button">Подробнее</button>
             </div>
 
+        </article>
+
+        <article class="week-card sunday-card">
+            <h2>Воскресенье</h2>
+            <p class="week-empty">Занятий нет</p>
         </article>
     </div>
 </section>
