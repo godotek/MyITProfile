@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Личный кабинет студента IT Moscow: расписание на сегодня, звонки, меню столовой и оценки.">
     <title>Главная | IT Moscow</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/site-data.js" defer></script>
+    <script src="js/script.js" defer></script>
 </head>
 <body>
 
@@ -39,29 +41,26 @@
 
     <div class="dashboard-grid">
         <section class="today-card dashboard-card">
-            <h2><svg class="clock-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" /><path d="M12 7.5V12l3 1.8" /></svg>Сегодня</h2>
+            <h2><img class="clock-icon" src="assets/icons/clock.svg" alt="">Сегодня</h2>
             <div class="today-lessons">
                 <div class="today-lesson">
-                    <div class="lesson-time"><span>9:30-11:00</span><small class="lesson-name">История · 403 каб.</small></div>
+                    <div class="lesson-time"><span>9:30-11:00</span><small class="lesson-name"><span class="lesson-title">История</span> <span class="lesson-room">403 каб.</span></small></div>
                     <a class="detail-button" href="schedule.html">Подробнее</a>
                 </div>
                 <div class="today-lesson">
-                    <div class="lesson-time"><span>11:30-13:00</span><small class="lesson-name">Русский язык · 313 каб.</small></div>
+                    <div class="lesson-time"><span>11:30-13:00</span><small class="lesson-name"><span class="lesson-title">Русский язык</span> <span class="lesson-room">313 каб.</span></small></div>
                     <a class="detail-button" href="schedule.html">Подробнее</a>
                 </div>
                 <div class="today-lesson current">
-                    <div class="lesson-time"><span>13:20-14:50</span><small class="lesson-name">Веб-разработка · 120 каб.</small><small>Сейчас идет</small></div>
+                    <div class="lesson-time"><span>13:20-14:50</span><small class="lesson-name"><span class="lesson-title">Веб-разработка</span> <span class="lesson-room">120 каб.</span></small><small>Сейчас идет</small></div>
                     <a class="detail-button" href="schedule.html">Подробнее</a>
                 </div>
             </div>
+            <a class="today-open-button" href="schedule.html">Открыть расписание</a>
         </section>
 
         <section class="lunch-mini dashboard-card texture-pink">
-            <h2><svg class="mini-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
-                <path d="M7 2v20" />
-                <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
-            </svg>Обед</h2>
+            <h2><img class="mini-icon" src="assets/icons/utensils.svg" alt="">Обед</h2>
             <div class="lunch-mini-time"><strong>2 перемена</strong><span>11:00-11:30</span></div>
             <div class="lunch-mini-menu">
                 <div><strong>Картошка</strong><strong>Хот-дог</strong><strong>Сок Яблочный</strong></div>
@@ -72,10 +71,7 @@
         </section>
 
         <section class="bells-mini dashboard-card texture-yellow">
-            <h2><svg class="mini-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M10.268 21a2 2 0 0 0 3.464 0" />
-                <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
-            </svg>Звонки</h2>
+            <h2><img class="mini-icon" src="assets/icons/bell.svg" alt="">Звонки</h2>
             <div class="bells-mini-content">
                 <div>
                     <strong>На пару:</strong>
@@ -95,12 +91,12 @@
 <section class="news-section">
     <div class="news-title-row">
         <h2>Новости</h2>
-        <div class="news-tabs" role="group" aria-label="Слайды новостей">
-            <button class="news-tab" type="button" data-slide="0" aria-label="Слайд 1" aria-pressed="false"></button>
-            <button class="news-tab" type="button" data-slide="1" aria-label="Слайд 2" aria-pressed="false"></button>
-            <button class="news-tab active" type="button" data-slide="2" aria-label="Слайд 3" aria-pressed="true"></button>
-            <button class="news-tab" type="button" data-slide="3" aria-label="Слайд 4" aria-pressed="false"></button>
-            <button class="news-tab" type="button" data-slide="4" aria-label="Слайд 5" aria-pressed="false"></button>
+        <div class="news-tabs" aria-hidden="true">
+            <span class="news-tab"></span>
+            <span class="news-tab"></span>
+            <span class="news-tab active"></span>
+            <span class="news-tab"></span>
+            <span class="news-tab"></span>
         </div>
     </div>
 
@@ -166,12 +162,11 @@
         </div>
         <button class="news-arrow news-arrow-next" type="button" data-news-next aria-label="Следующая новость"><svg class="control-arrow-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6 15 12l-6 6" /></svg></button>
     </div>
-    <a class="news-open-button" href="#" data-message="Лента новостей пока не подключена">Открыть ленту</a>
 </section>
 
 </main>
 
-    <footer class="site-footer footer-dark">
+    <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-logo"><span class="logo-square"></span> IT Moscow</div>
             <div class="footer-columns">
