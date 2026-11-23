@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const toast = document.querySelector("[data-toast]");
+    const $ = function (selector, root) { return (root || document).querySelector(selector); };
+    const $$ = function (selector, root) { return Array.from((root || document).querySelectorAll(selector)); };
+    const { accounts, semesterDates, subjects, lessons, defaultLesson, menus } = window.itMoscowData;
+    const toast = $("[data-toast]");
     let toastTimer;
 
     function showMessage(message) {
@@ -7,130 +10,80 @@ document.addEventListener("DOMContentLoaded", function () {
         toast.textContent = message;
         toast.classList.add("visible");
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(function () {
-            toast.classList.remove("visible");
-        }, 2600);
+        toastTimer = setTimeout(function () { toast.classList.remove("visible"); }, 2600);
     }
 
-    document.querySelectorAll("[data-message]").forEach(function (element) {
-        element.addEventListener("click", function (event) {
-            event.preventDefault();
-            showMessage(element.dataset.message || "Раздел пока не подключён");
-        });
+    document.addEventListener("click", function (event) {
+        const link = event.target.closest("[data-message]");
+        if (!link) return;
+        event.preventDefault();
+        showMessage(link.dataset.message || "Раздел пока не подключён");
     });
 
-    const passwordToggle = document.querySelector("[data-password-toggle]");
-    const passwordInput = document.querySelector("#student-password");
+    const sessionKey = "itmoscow.student";
 
-    if (passwordToggle && passwordInput) {
+    const passwordToggle = $("[data-password-toggle]");
+    const passwordField = $("#student-password");
+
+    if (passwordToggle && passwordField) {
         passwordToggle.addEventListener("click", function () {
-            const isVisible = passwordInput.type === "password";
-            passwordInput.type = isVisible ? "text" : "password";
-            passwordToggle.setAttribute("aria-label", isVisible ? "Скрыть пароль" : "Показать пароль");
-            passwordToggle.setAttribute("aria-pressed", String(isVisible));
+            const visible = passwordField.type === "password";
+            passwordField.type = visible ? "text" : "password";
+            passwordToggle.setAttribute("aria-label", visible ? "Скрыть пароль" : "Показать пароль");
+            passwordToggle.setAttribute("aria-pressed", visible);
         });
     }
-
-    const STUDENT_ACCOUNTS = [
-        {
-            login: "demekhin",
-            password: "Artem2026!",
-            firstName: "Артем",
-            fullName: "Демехин Артем",
-            group: "2ВР-1-25",
-            specialty: "Веб-разработка",
-            course: "2 курс"
-        },
-        {
-            login: "balashov",
-            password: "Evgeniy2026!",
-            firstName: "Евгений",
-            fullName: "Балашов Евгений",
-            group: "2ВР-1-25",
-            specialty: "Веб-разработка",
-            course: "2 курс"
-        },
-        {
-            login: "skovorodov",
-            password: "Stepan2026!",
-            firstName: "Степан",
-            fullName: "Сковородов Степан",
-            group: "2ВР-1-25",
-            specialty: "Веб-разработка",
-            course: "2 курс"
-        }
-    ];
-
-    const SESSION_KEY = "itmoscow.student";
 
     function readSession() {
         try {
-            const raw = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY);
+            const raw = localStorage.getItem(sessionKey) || sessionStorage.getItem(sessionKey);
             const data = raw ? JSON.parse(raw) : null;
-            if (!data || !data.login) return null;
-
-            const account = STUDENT_ACCOUNTS.find(function (item) {
-                return item.login === data.login;
-            });
-
+            const account = data && accounts.find(function (item) { return item.login === data.login; });
             if (!account) return null;
-
-            return {
-                login: account.login,
-                firstName: account.firstName,
-                fullName: account.fullName,
-                group: account.group,
-                specialty: account.specialty,
-                course: account.course
-            };
+            const profile = Object.assign({}, account);
+            delete profile.password;
+            return profile;
         } catch (error) {
             return null;
         }
     }
 
     function saveSession(student, remember) {
-        const data = {
-            login: student.login,
-            firstName: student.firstName,
-            fullName: student.fullName,
-            group: student.group,
-            specialty: student.specialty,
-            course: student.course
-        };
+        const data = Object.assign({}, student);
+        delete data.password;
 
         try {
-            localStorage.removeItem(SESSION_KEY);
-            sessionStorage.removeItem(SESSION_KEY);
-            (remember ? localStorage : sessionStorage).setItem(SESSION_KEY, JSON.stringify(data));
+            localStorage.removeItem(sessionKey);
+            sessionStorage.removeItem(sessionKey);
+            (remember ? localStorage : sessionStorage).setItem(sessionKey, JSON.stringify(data));
         } catch (error) {
             showMessage("Браузер запретил сохранение сессии, вход не сохранится после перехода");
         }
 
-        return data;
     }
 
     function clearSession() {
         try {
-            localStorage.removeItem(SESSION_KEY);
-            sessionStorage.removeItem(SESSION_KEY);
+            localStorage.removeItem(sessionKey);
+            sessionStorage.removeItem(sessionKey);
         } catch (error) {
             return;
         }
     }
 
-    function updateProfileMenu(session) {
-        document.querySelectorAll("[data-profile-menu]").forEach(function (menu) {
+    let sideProfile = null;
+    let sideLogout = null;
+
+    function updateStudentUI(session) {
+        $$("[data-profile-menu]").forEach(function (menu) {
             menu.classList.toggle("is-guest", !session);
             menu.classList.remove("is-open");
 
-            const button = menu.querySelector(".profile-button");
+            const button = $(".profile-button", menu);
             if (button) {
                 button.textContent = session ? session.firstName : "Войти";
-                if (session) {
-                    button.title = session.fullName + " · группа " + session.group;
-                } else {
-                    button.removeAttribute("title");
-                }
+                if (session) button.title = session.fullName + " · группа " + session.group;
+                else button.removeAttribute("title");
             }
 
             if (!session) return;
@@ -144,18 +97,23 @@ document.addEventListener("DOMContentLoaded", function () {
             };
 
             Object.keys(fields).forEach(function (selector) {
-                const node = menu.querySelector(selector);
+                const node = $(selector, menu);
                 if (node) node.textContent = fields[selector];
             });
         });
-    }
 
-    updateProfileMenu(readSession());
+        if (sideProfile) {
+            sideProfile.textContent = session ? session.firstName : "Войти";
+            sideProfile.href = session ? "main.html" : "index.html";
+            sideProfile.title = session ? session.fullName : "Войти в кабинет";
+        }
+        if (sideLogout) sideLogout.hidden = !session;
+    }
 
     document.addEventListener("click", function (event) {
         if (event.target.closest("[data-logout]")) {
             clearSession();
-            updateProfileMenu(null);
+            updateStudentUI(null);
             window.location.href = "index.html";
             return;
         }
@@ -169,25 +127,23 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        document.querySelectorAll("[data-profile-menu].is-open").forEach(function (openMenu) {
+        $$("[data-profile-menu].is-open").forEach(function (openMenu) {
             if (!openMenu.contains(event.target)) openMenu.classList.remove("is-open");
         });
     });
 
     document.addEventListener("keydown", function (event) {
         if (event.key !== "Escape") return;
-        document.querySelectorAll("[data-profile-menu].is-open").forEach(function (menu) {
-            menu.classList.remove("is-open");
-        });
+        $$("[data-profile-menu].is-open").forEach(function (menu) { menu.classList.remove("is-open"); });
     });
 
-    const loginForm = document.querySelector("[data-login-form]");
-    const loginMessage = document.querySelector("[data-login-message]");
+    const loginForm = $("[data-login-form]");
 
     if (loginForm) {
-        const loginInput = loginForm.querySelector("#student-login");
-        const passwordInput = loginForm.querySelector("#student-password");
-        const rememberInput = loginForm.querySelector('input[name="remember"]');
+        const loginInput = $("#student-login", loginForm);
+        const loginPassword = $("#student-password", loginForm);
+        const rememberInput = $('input[name="remember"]', loginForm);
+        const loginMessage = $("[data-login-message]");
 
         function setLoginMessage(text, isError) {
             if (!loginMessage) return;
@@ -195,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loginMessage.classList.toggle("is-error", Boolean(isError));
         }
 
-        [loginInput, passwordInput].forEach(function (input) {
+        [loginInput, loginPassword].forEach(function (input) {
             if (!input) return;
             input.addEventListener("input", function () {
                 input.removeAttribute("aria-invalid");
@@ -207,93 +163,64 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
 
             const login = loginInput ? loginInput.value.trim().toLowerCase() : "";
-            const password = passwordInput ? passwordInput.value : "";
-            const student = STUDENT_ACCOUNTS.find(function (account) {
+            const password = loginPassword ? loginPassword.value : "";
+            const student = accounts.find(function (account) {
                 return account.login === login && account.password === password;
             });
 
             if (!student) {
                 setLoginMessage("Неверный логин или пароль. Проверьте раскладку клавиатуры и Caps Lock.", true);
                 if (loginInput) loginInput.setAttribute("aria-invalid", "true");
-                if (passwordInput) {
-                    passwordInput.setAttribute("aria-invalid", "true");
-                    passwordInput.value = "";
-                    passwordInput.focus();
+                if (loginPassword) {
+                    loginPassword.setAttribute("aria-invalid", "true");
+                    loginPassword.value = "";
+                    loginPassword.focus();
                 }
                 return;
             }
 
-            const session = saveSession(student, Boolean(rememberInput && rememberInput.checked));
-            updateProfileMenu(session);
+            saveSession(student, Boolean(rememberInput && rememberInput.checked));
             setLoginMessage("Вход выполнен. Открываем дневник…", false);
-
-            setTimeout(function () {
-                window.location.href = "main.html";
-            }, 650);
+            setTimeout(function () { window.location.href = "main.html"; }, 650);
         });
     }
 
-    const slider = document.querySelector("[data-news-slider]");
-    const track = slider && slider.querySelector(".news-track");
-    const tabs = Array.from(document.querySelectorAll("[data-slide]"));
-    const cards = track ? Array.from(track.querySelectorAll("[data-news-card]")) : [];
-    const previousButton = document.querySelector("[data-news-prev]");
-    const nextButton = document.querySelector("[data-news-next]");
+    const slider = $("[data-news-slider]");
+    const cards = slider ? $$("[data-news-card]", slider) : [];
+    const tabs = $$(".news-tab");
+    const prevButton = $("[data-news-prev]");
+    const nextButton = $("[data-news-next]");
 
-    if (slider && cards.length >= 3 && tabs.length === cards.length) {
-        let activeIndex = 2;
+    if (slider && cards.length >= 3) {
+        let activeIndex = cards.findIndex(function (card) { return card.classList.contains("active"); });
+        if (activeIndex < 0) activeIndex = 0;
 
-        function showSlide(index) {
-            activeIndex = (index + cards.length) % cards.length;
+        function renderSlide() {
+            const count = cards.length;
+            const left = (activeIndex + count - 1) % count;
+            const right = (activeIndex + 1) % count;
 
-            const positions = {
-                left: (activeIndex + cards.length - 1) % cards.length,
-                center: activeIndex,
-                right: (activeIndex + 1) % cards.length
-            };
-
-            cards.forEach(function (card, cardIndex) {
-                card.classList.toggle("active", cardIndex === activeIndex);
-
-                let position = "hidden";
-                if (cardIndex === positions.left) position = "left";
-                else if (cardIndex === positions.right) position = "right";
-                else if (cardIndex === positions.center) position = "center";
-
+            cards.forEach(function (card, index) {
+                const position = index === activeIndex ? "center" : index === left ? "left" : index === right ? "right" : "hidden";
                 card.dataset.position = position;
-
-                const isHidden = position === "hidden";
-                card.setAttribute("aria-hidden", String(isHidden));
+                card.classList.toggle("active", index === activeIndex);
+                card.setAttribute("aria-hidden", String(position === "hidden"));
                 const link = card.querySelector("a");
-                if (link) link.tabIndex = isHidden ? -1 : 0;
+                if (link) link.tabIndex = position === "hidden" ? -1 : 0;
             });
 
-            tabs.forEach(function (tab, tabIndex) {
-                const isActive = tabIndex === activeIndex;
-                tab.classList.toggle("active", isActive);
-                tab.setAttribute("aria-pressed", String(isActive));
+            tabs.forEach(function (tab, index) {
+                tab.classList.toggle("active", index === activeIndex);
             });
         }
 
-        tabs.forEach(function (tab) {
-            tab.addEventListener("click", function () {
-                showSlide(Number(tab.dataset.slide));
-            });
-        });
-
-        if (previousButton) {
-            previousButton.addEventListener("click", function () {
-                showSlide(activeIndex - 1);
-            });
+        function stepSlide(step) {
+            activeIndex = (activeIndex + step + cards.length) % cards.length;
+            renderSlide();
         }
 
-        if (nextButton) {
-            nextButton.addEventListener("click", function () {
-                showSlide(activeIndex + 1);
-            });
-        }
-
-        showSlide(activeIndex);
+        if (prevButton) prevButton.addEventListener("click", function () { stepSlide(-1); });
+        if (nextButton) nextButton.addEventListener("click", function () { stepSlide(1); });
 
         let touchStartX = null;
 
@@ -303,203 +230,243 @@ document.addEventListener("DOMContentLoaded", function () {
 
         slider.addEventListener("touchend", function (event) {
             if (touchStartX === null) return;
-
             const deltaX = event.changedTouches[0].clientX - touchStartX;
             touchStartX = null;
+            if (Math.abs(deltaX) > 40) stepSlide(deltaX < 0 ? 1 : -1);
+        });
 
-            if (Math.abs(deltaX) > 40) {
-                showSlide(activeIndex + (deltaX < 0 ? 1 : -1));
-            }
+        renderSlide();
+    }
+
+    const panelHeader = $(".site-header");
+
+    if (panelHeader) {
+        const sourceNav = $(".main-nav", panelHeader);
+        const balanceNode = $(".balance h2");
+        const phoneNode = $(".footer-phone");
+
+        const navToggle = document.createElement("button");
+        navToggle.type = "button";
+        navToggle.className = "nav-toggle";
+        navToggle.setAttribute("aria-label", "Открыть меню");
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-controls", "side-panel");
+        navToggle.innerHTML = "<span></span><span></span><span></span>";
+        panelHeader.appendChild(navToggle);
+
+        const sidePanel = document.createElement("aside");
+        sidePanel.className = "side-panel";
+        sidePanel.id = "side-panel";
+        sidePanel.setAttribute("aria-hidden", "true");
+        sidePanel.innerHTML =
+            '<a class="side-profile" href="index.html" data-side-profile>Войти</a>' +
+            '<p class="side-status"><span class="side-status-dot"></span>В колледже</p>' +
+            '<nav class="side-nav" aria-label="Меню страниц"></nav>' +
+            '<div class="side-panel-foot">' +
+            (balanceNode ? '<p class="side-balance">' + balanceNode.textContent + "</p>" : "") +
+            (phoneNode ? '<p class="side-phone">' + phoneNode.textContent + "</p>" : "") +
+            '<button class="side-logout" type="button" data-logout hidden>Выход</button>' +
+            "</div>";
+
+        const sideOverlay = document.createElement("div");
+        sideOverlay.className = "side-overlay";
+        sideOverlay.hidden = true;
+
+        document.body.appendChild(sideOverlay);
+        document.body.appendChild(sidePanel);
+
+        const sideNav = $(".side-nav", sidePanel);
+
+        if (sourceNav) {
+            $$("a", sourceNav).forEach(function (link) {
+                const item = document.createElement("a");
+                item.className = "side-link" + (link.classList.contains("active") ? " is-active" : "");
+                item.href = link.getAttribute("href");
+                item.textContent = link.textContent.trim();
+                sideNav.appendChild(item);
+            });
+        }
+
+        sideProfile = $("[data-side-profile]", sidePanel);
+        sideLogout = $("[data-logout]", sidePanel);
+
+        function openSidePanel() {
+            sidePanel.classList.add("is-open");
+            navToggle.classList.add("is-open");
+            sideOverlay.hidden = false;
+            document.body.classList.add("panel-open");
+            navToggle.setAttribute("aria-expanded", "true");
+            sidePanel.setAttribute("aria-hidden", "false");
+
+            const firstLink = $(".side-link", sidePanel);
+            if (firstLink) firstLink.focus({ preventScroll: true });
+        }
+
+        function closeSidePanel(returnFocus) {
+            if (!sidePanel.classList.contains("is-open")) return;
+
+            sidePanel.classList.remove("is-open");
+            navToggle.classList.remove("is-open");
+            sideOverlay.hidden = true;
+            document.body.classList.remove("panel-open");
+            navToggle.setAttribute("aria-expanded", "false");
+            sidePanel.setAttribute("aria-hidden", "true");
+
+            if (returnFocus) navToggle.focus({ preventScroll: true });
+        }
+
+        navToggle.addEventListener("click", function () {
+            if (sidePanel.classList.contains("is-open")) closeSidePanel(true);
+            else openSidePanel();
+        });
+
+        sideOverlay.addEventListener("click", function () { closeSidePanel(true); });
+
+        sidePanel.addEventListener("click", function (event) {
+            if (event.target.closest(".side-link") || event.target.closest("[data-logout]")) closeSidePanel(false);
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") closeSidePanel(true);
+        });
+
+    }
+
+    updateStudentUI(readSession());
+
+    const gradesPage = $(".grades-page");
+
+    if (gradesPage) {
+        const gradesTabs = document.createElement("div");
+        gradesTabs.className = "grades-tabs";
+        gradesTabs.setAttribute("role", "tablist");
+        gradesTabs.innerHTML =
+            '<button class="grades-tab is-active" type="button" role="tab" aria-selected="true" data-grades-tab="daily">За день</button>' +
+            '<button class="grades-tab" type="button" role="tab" aria-selected="false" data-grades-tab="subjects">По предмету</button>';
+        const gradesTitle = $(".page-title", gradesPage);
+        if (gradesTitle) gradesTitle.insertAdjacentElement("afterend", gradesTabs);
+        else gradesPage.insertBefore(gradesTabs, gradesPage.firstChild);
+
+        gradesTabs.addEventListener("click", function (event) {
+            const tab = event.target.closest("[data-grades-tab]");
+            if (!tab) return;
+
+            gradesPage.classList.toggle("show-subjects", tab.dataset.gradesTab === "subjects");
+
+            $$(".grades-tab", gradesTabs).forEach(function (item) {
+                const active = item === tab;
+                item.classList.toggle("is-active", active);
+                item.setAttribute("aria-selected", String(active));
+            });
         });
     }
 
-    // ----------------- Модальные окна -----------------
+    const weekGrid = $(".week-grid");
 
-    const SEMESTER_DATES = ["1 сентября — 28 декабря", "1 января — 28 марта", "7 апреля — 31 мая"];
+    if (weekGrid) {
+        const weekCards = $$(".week-card", weekGrid);
+        const dateHeading = $(".week-date-heading");
+        const weekRange = ($(".week-date-heading span") || {}).textContent || "";
+        const weekStart = parseInt((weekRange.match(/\d{1,2}/) || [])[0], 10);
+        const shortDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+        const dayPicker = document.createElement("div");
+        dayPicker.className = "day-picker";
 
-    const SUBJECT_DETAILS = {
-        history: {
-            name: "История",
-            teacher: "Дмитрий Петрович",
-            marks: [[5, 4, 5, 5, 4, 5, 4], [5, 5, 4, 4, 5, 5, 4], [5, 4, 5, 5, 5, 4, 5]]
-        },
-        math: {
-            name: "Математика",
-            teacher: "Ирина Сергеевна",
-            marks: [[4, 5, 4, 4, 5, 4, 5], [5, 4, 5, 4, 4, 5, 5], [4, 4, 5, 4, 5, 4, 5]]
-        },
-        russian: {
-            name: "Русский язык",
-            teacher: "Олег Витальевич",
-            marks: [[5, 4, 4, 5, 5, 4, 5], [4, 5, 5, 4, 4, 5, 5], [5, 5, 4, 4, 5, 5, 4]]
-        },
-        web: {
-            name: "Веб-разработка",
-            teacher: "Магомед Омарович",
-            marks: [[5, 5, 4, 5, 4, 5, 4], [5, 5, 3, 4, 5, 4, 4], [5, 5, 5, 3, 5, 4, 5]]
-        },
-        english: {
-            name: "Английский язык",
-            teacher: "Алина Евгеньевна",
-            marks: [[5, 5, 4, 5, 5, 4, 5], [4, 5, 5, 5, 4, 5, 5], [5, 5, 4, 5, 5, 5, 4]]
-        },
-        chemistry: {
-            name: "Химия",
-            teacher: "Наталья Андреевна",
-            marks: [[4, 5, 4, 4, 5, 4, 5], [5, 4, 5, 5, 4, 4, 5], [4, 4, 5, 5, 4, 5, 4]]
-        },
-        dup: {
-            name: "ДУП. 04",
-            teacher: "Ольга Николаевна",
-            marks: [[5, 5, 4, 5, 5, 5, 4], [5, 5, 5, 4, 5, 5, 4], [5, 4, 5, 5, 5, 4, 5]]
-        },
-        thinking: {
-            name: "Осн. диз. мышления.",
-            teacher: "Анна Павловна",
-            marks: [[5, 5, 5, 4, 5, 4, 5], [5, 4, 5, 5, 4, 5, 5], [4, 5, 5, 4, 5, 5, 5]]
-        },
-        biology: {
-            name: "Биология",
-            teacher: "Елена Викторовна",
-            marks: [[5, 4, 5, 5, 4, 5, 5], [4, 5, 4, 5, 5, 4, 5], [5, 5, 5, 4, 4, 5, 5]]
-        },
-        infres: {
-            name: "Проектирование инф. рес.",
-            teacher: "Сергей Александрович",
-            marks: [[5, 5, 4, 5, 5, 4, 5], [5, 4, 5, 5, 5, 4, 5], [4, 5, 5, 5, 4, 5, 5]]
-        },
-        projectbase: {
-            name: "Основы проект. баз.",
-            teacher: "Виктор Михайлович",
-            marks: [[4, 4, 5, 4, 5, 4, 5], [4, 5, 4, 4, 5, 5, 4], [5, 4, 4, 5, 5, 4, 5]]
-        },
-        networks: {
-            name: "Компьютерные сети",
-            teacher: "Алексей Романович",
-            marks: [[5, 5, 4, 5, 5, 5, 4], [5, 4, 5, 5, 5, 5, 4], [5, 5, 5, 4, 5, 4, 5]]
+        function setDay(index) {
+            weekCards.forEach(function (card, position) {
+                card.classList.toggle("is-active", position === index);
+            });
+
+            $$(".day-chip", dayPicker).forEach(function (chip, position) {
+                const active = position === index;
+                chip.classList.toggle("is-active", active);
+                chip.setAttribute("aria-current", active ? "true" : "false");
+            });
         }
-    };
 
-    const LESSON_KEYS = {
-        "Веб-разработка": "web",
-        "Русский язык": "russian",
-        "Английский": "english",
-        "История": "history"
-    };
+        weekCards.forEach(function (card, index) {
+            const chip = document.createElement("button");
+            chip.type = "button";
+            chip.className = "day-chip";
+            if (index === 1) chip.classList.add("is-today");
+            chip.innerHTML = "<span>" + (shortDays[index] || "") + "</span>" +
+                (weekStart ? "<strong>" + (weekStart + index) + "</strong>" : "");
+            chip.addEventListener("click", function () { setDay(index); });
+            dayPicker.appendChild(chip);
+        });
 
-    const CODE_SUBJECTS = ["web", "dup", "infres", "projectbase", "networks"];
+        if (dateHeading) dateHeading.insertAdjacentElement("afterend", dayPicker);
 
-    const LESSON_DETAILS = {
-        web: {
-            teacher: "Магомед Омарович",
-            materials: "Изучить прикреплённые материалы: конспект «Семантическая вёрстка», макет Figma и репозиторий с примерами компонентов.",
-            homework: "Выполнить домашнее задание в LMS: сверстать карточку товара по макету, проверить адаптивность и прикрепить ссылку на репозиторий.",
-            bring: "Ноутбук, зарядное устройство и наушники."
-        },
-        russian: {
-            teacher: "Олег Витальевич",
-            materials: "Учебник, § 34–36 и таблица «Обособленные члены предложения» из электронной библиотеки.",
-            homework: "Упражнение 214 письменно и сочинение-миниатюра на 120 слов по теме занятия.",
-            bring: "Рабочая тетрадь, учебник и орфографический словарь."
-        },
-        english: {
-            teacher: "Алина Евгеньевна",
-            materials: "Unit 5 учебника, аудио 5.2 и набор карточек Quizlet «Professions».",
-            homework: "Написать эссе на 150 слов и подготовить монолог по теме «My future profession».",
-            bring: "Тетрадь, наушники и распечатка с новой лексикой."
-        },
-        history: {
-            teacher: "Дмитрий Петрович",
-            materials: "Параграфы 14–15, карта «Реформы XIX века» и презентация преподавателя.",
-            homework: "Заполнить таблицу реформ и письменно ответить на вопросы 1–3 после параграфа.",
-            bring: "Рабочая тетрадь, атлас и ручка двух цветов."
-        }
-    };
+        const currentIndex = weekCards.findIndex(function (card) { return $(".lesson-now", card); });
+        setDay(currentIndex < 0 ? 0 : currentIndex);
+    }
 
-    const DEFAULT_LESSON = {
-        teacher: "Куратор группы",
-        materials: "Материалы к занятию прикреплены в личном кабинете студента.",
-        homework: "Домашнее задание уточните у преподавателя на паре.",
-        bring: "Тетрадь и ручка."
-    };
+    const bellsTableCard = $(".bells-table-card");
 
-    const MENU_DETAILS = {
-        italian: {
-            calories: "820 ккал",
-            protein: "32 г",
-            fat: "34 г",
-            carbs: "96 г",
-            allergens: "глютен, молоко, сельдерей",
-            note: "Пицца готовится после оплаты. Заберите обед на раздаче у окна № 2."
-        },
-        american: {
-            calories: "760 ккал",
-            protein: "26 г",
-            fat: "30 г",
-            carbs: "92 г",
-            allergens: "глютен, молоко, горчица",
-            note: "Хот-дог собирают после оплаты. Заберите обед на раздаче у окна № 1."
-        },
-        russian: {
-            calories: "690 ккал",
-            protein: "27 г",
-            fat: "24 г",
-            carbs: "88 г",
-            allergens: "глютен, молоко, яйца",
-            note: "Пельмени отваривают порционно. Заберите обед на раздаче у окна № 3."
-        },
-        eastern: {
-            calories: "730 ккал",
-            protein: "30 г",
-            fat: "29 г",
-            carbs: "84 г",
-            allergens: "глютен, молоко, кунжут",
-            note: "Шаурму готовят после оплаты. Заберите обед на раздаче у окна № 4."
-        }
-    };
+    if (bellsTableCard) {
+        const rows = $$(".bells-table tbody tr", bellsTableCard);
+        const bellsCards = document.createElement("div");
+        bellsCards.className = "bells-cards";
+        let currentShift = 0;
+
+        rows.forEach(function (row) {
+            const cells = $$("td", row);
+            const firstShift = cells[0].classList.contains("pink-number");
+            const shift = firstShift ? 1 : 2;
+
+            if (shift !== currentShift) {
+                currentShift = shift;
+                const title = document.createElement("h2");
+                title.className = "bells-shift-title " + (firstShift ? "is-first" : "is-second");
+                title.textContent = shift + " смена";
+                bellsCards.appendChild(title);
+            }
+
+            const breakText = cells[4].textContent.trim();
+            const card = document.createElement("article");
+            card.className = "bells-pair-card";
+            card.innerHTML =
+                '<div class="bells-pair-head"><span>Пара</span><span>Урок</span><span>Начало</span><span>Конец</span><span>Перемена</span></div>' +
+                '<div class="bells-pair-values">' +
+                    '<span class="' + (firstShift ? "pink-number" : "blue-number") + '">' + cells[0].textContent.trim() + "</span>" +
+                    '<span class="' + (firstShift ? "pink-number" : "blue-number") + '">' + cells[1].innerHTML + "</span>" +
+                    "<span>" + cells[2].textContent.trim() + "</span>" +
+                    "<span>" + cells[3].textContent.trim() + "</span>" +
+                    "<span>" + (breakText === "Домой" ? "Конец" : breakText) + "</span>" +
+                "</div>";
+            bellsCards.appendChild(card);
+        });
+
+        bellsTableCard.insertAdjacentElement("afterend", bellsCards);
+    }
 
     const modalRoot = document.createElement("div");
     modalRoot.className = "modal-overlay";
     modalRoot.hidden = true;
-    modalRoot.innerHTML = [
-        '<div class="modal-shell">',
-        '  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">',
-        '    <div class="modal-main">',
-        '      <header class="modal-head" data-modal-head>',
-        '        <h2 id="modal-title" data-modal-title></h2>',
-        '        <p class="modal-subtitle" data-modal-subtitle></p>',
-        '      </header>',
-        '      <div class="modal-body" data-modal-body></div>',
-        '      <footer class="modal-footer" data-modal-footer hidden></footer>',
-        '    </div>',
-        '    <div class="modal-visual" data-modal-visual aria-hidden="true"></div>',
-        '  </div>',
-        '  <button class="modal-close" type="button" data-modal-close aria-label="Закрыть">',
-        '    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 6.5 17.5 17.5M17.5 6.5 6.5 17.5"/></svg>',
-        '  </button>',
-        '</div>'
-    ].join("");
+    modalRoot.innerHTML =
+        '<div class="modal-shell"><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">' +
+        '<div class="modal-main"><header class="modal-head" data-modal-head><h2 id="modal-title" data-modal-title></h2>' +
+        '<p class="modal-subtitle" data-modal-subtitle></p></header>' +
+        '<div class="modal-body" data-modal-body></div>' +
+        '<footer class="modal-footer" data-modal-footer hidden></footer></div>' +
+        '<div class="modal-visual" data-modal-visual aria-hidden="true"></div></div>' +
+        '<button class="modal-close" type="button" data-modal-close aria-label="Закрыть">' +
+        '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.5 6.5 17.5 17.5M17.5 6.5 6.5 17.5"/></svg>' +
+        "</button></div>";
     document.body.appendChild(modalRoot);
 
-    const modalHead = modalRoot.querySelector("[data-modal-head]");
-    const modalTitle = modalRoot.querySelector("[data-modal-title]");
-    const modalSubtitle = modalRoot.querySelector("[data-modal-subtitle]");
-    const modalBody = modalRoot.querySelector("[data-modal-body]");
-    const modalFooter = modalRoot.querySelector("[data-modal-footer]");
-    const modalVisual = modalRoot.querySelector("[data-modal-visual]");
-    const modalClose = modalRoot.querySelector("[data-modal-close]");
-    const modalCard = modalRoot.querySelector(".modal-card");
+    const modalHead = $("[data-modal-head]", modalRoot);
+    const modalTitle = $("[data-modal-title]", modalRoot);
+    const modalSubtitle = $("[data-modal-subtitle]", modalRoot);
+    const modalBody = $("[data-modal-body]", modalRoot);
+    const modalFooter = $("[data-modal-footer]", modalRoot);
+    const modalVisual = $("[data-modal-visual]", modalRoot);
+    const modalCard = $(".modal-card", modalRoot);
     let modalReturnFocus = null;
     let modalHideTimer;
 
     function averageOf(marks) {
-        return marks.reduce(function (sum, mark) {
-            return sum + mark;
-        }, 0) / marks.length;
-    }
-
-    function formatAverage(value) {
-        return value.toFixed(2);
+        return (marks.reduce(function (sum, mark) { return sum + mark; }, 0) / marks.length).toFixed(2);
     }
 
     function openModal(options) {
@@ -521,9 +488,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!modalReturnFocus) modalReturnFocus = document.activeElement;
         modalCard.focus({ preventScroll: true });
 
-        requestAnimationFrame(function () {
-            modalRoot.classList.add("is-open");
-        });
+        requestAnimationFrame(function () { modalRoot.classList.add("is-open"); });
     }
 
     function closeModal() {
@@ -531,20 +496,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         modalRoot.classList.remove("is-open");
         document.body.classList.remove("modal-open");
-        modalHideTimer = setTimeout(function () {
-            modalRoot.hidden = true;
-        }, 180);
+        modalHideTimer = setTimeout(function () { modalRoot.hidden = true; }, 180);
 
-        if (modalReturnFocus && modalReturnFocus.isConnected) {
-            modalReturnFocus.focus({ preventScroll: true });
-        }
+        if (modalReturnFocus && modalReturnFocus.isConnected) modalReturnFocus.focus({ preventScroll: true });
         modalReturnFocus = null;
     }
 
     modalRoot.addEventListener("click", function (event) {
-        if (event.target === modalRoot || event.target.closest("[data-modal-close]")) {
-            closeModal();
-        }
+        if (event.target === modalRoot || event.target.closest("[data-modal-close]")) closeModal();
     });
 
     document.addEventListener("keydown", function (event) {
@@ -557,7 +516,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (event.key !== "Tab") return;
 
-        const focusable = Array.from(modalRoot.querySelectorAll("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])")).filter(function (node) {
+        const focusable = $$("button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])", modalRoot).filter(function (node) {
             return node.offsetParent !== null;
         });
 
@@ -576,20 +535,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function semesterCard(marks, index) {
-        const average = formatAverage(averageOf(marks));
-        const markTiles = marks.map(function (mark) {
+        const tiles = marks.map(function (mark) {
             return '<span class="modal-mark' + (mark <= 2 ? " is-low" : "") + '">' + mark + "</span>";
         }).join("");
 
-        return [
-            '<section class="semester-card">',
-            '  <div class="semester-head">',
-            '    <div><strong>Семестр ', index + 1, '</strong><small>', SEMESTER_DATES[index], '</small></div>',
-            '    <div class="semester-average"><strong>', average, '</strong><small>средний балл</small></div>',
-            '  </div>',
-            '  <div class="modal-marks">', markTiles, '</div>',
-            '</section>'
-        ].join("");
+        return '<section class="semester-card"><div class="semester-head"><div><strong>Семестр ' + (index + 1) +
+            '</strong><small>' + semesterDates[index] + '</small></div><div class="semester-average"><strong>' +
+            averageOf(marks) + '</strong><small>средний балл</small></div></div><div class="modal-marks">' + tiles + "</div></section>";
     }
 
     function modalField(label, value) {
@@ -597,30 +549,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function subjectModal(key) {
-        const subject = SUBJECT_DETAILS[key];
+        const subject = subjects[key];
         if (!subject) return;
 
         openModal({
             title: subject.name,
             subtitle: "Преподаватель: " + subject.teacher,
             body: subject.marks.map(semesterCard).join(""),
-            footer: '<span>Средний балл по предмету</span><strong class="modal-summary-value">' + formatAverage(averageOf(subject.marks.flat())) + '</strong>',
-            visual: CODE_SUBJECTS.indexOf(key) === -1 ? "study" : "code"
+            footer: '<span>Средний балл по предмету</span><strong class="modal-summary-value">' + averageOf(subject.marks.flat()) + '</strong>',
+            visual: subject.visual || "study"
         });
     }
 
     function lessonModal(lesson) {
-        const subjectNode = lesson.querySelector(".week-subject");
+        const subjectNode = $(".week-subject", lesson);
         if (!subjectNode) return;
 
         const card = lesson.closest(".week-card");
         const subject = subjectNode.childNodes[0].textContent.trim();
-        const lessonKey = LESSON_KEYS[subject];
-        const details = LESSON_DETAILS[lessonKey] || DEFAULT_LESSON;
-        const room = ((subjectNode.querySelector("small") || {}).textContent || "").replace("каб.", "").trim();
+        const details = lessons[subject] || defaultLesson;
+        const room = (($("small", subjectNode) || {}).textContent || "").replace("каб.", "").trim();
         const meta = [
             card && card.querySelector("h2").childNodes[0].textContent.trim(),
-            (lesson.querySelector(".week-time > span") || {}).textContent,
+            ($(".week-time > span", lesson) || {}).textContent,
             room && "кабинет " + room,
             card && card.classList.contains("saturday-card") && "дистанционно"
         ].filter(Boolean).join(" · ");
@@ -632,18 +583,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 modalField("Материалы для изучения", details.materials) +
                 modalField("Домашнее задание", details.homework) +
                 modalField("Что взять с собой", details.bring),
-            visual: lessonKey === "web" ? "code" : "study"
+            visual: subject === "Веб-разработка" ? "code" : "study"
         });
     }
 
     function menuModal(card, key) {
-        const details = MENU_DETAILS[key];
+        const details = menus[key];
         if (!details) return;
 
-        const title = card.querySelector("h2").textContent.trim();
-        const price = card.querySelector(".menu-total").textContent.trim();
-        const items = Array.from(card.querySelectorAll(".menu-items p")).map(function (item) {
-            return "<p><span>" + item.querySelector("span").textContent + "</span><small>" + item.querySelector("small").textContent + "</small></p>";
+        const title = $("h2", card).textContent.trim();
+        const price = $(".menu-total", card).textContent.trim();
+        const items = $$(".menu-items p", card).map(function (item) {
+            return "<p><span>" + $("span", item).textContent + "</span><small>" + $("small", item).textContent + "</small></p>";
         }).join("");
         const facts = [
             ["Калорийность", details.calories],
@@ -658,22 +609,16 @@ document.addEventListener("DOMContentLoaded", function () {
             title: "Оплата обеда",
             subtitle: "Меню: " + title,
             accent: "pink",
-            body: [
-                '<p class="modal-label">Состав меню:</p>',
-                '<div class="modal-box modal-menu-list">', items, '</div>',
-                '<div class="modal-menu-facts">', facts, '</div>',
-                '<p class="modal-label modal-label-spaced">Аллергены</p>',
-                '<p class="modal-allergens">', details.allergens, '</p>',
-                '<p class="modal-note">', details.note, '</p>'
-            ].join(""),
-            footer: [
-                '<button class="modal-pay-button" type="button" data-modal-pay>Оплатить</button>',
-                '<p class="modal-total">К оплате: <strong>', price, '</strong></p>'
-            ].join(""),
+            body: '<p class="modal-label">Состав меню:</p><div class="modal-box modal-menu-list">' + items +
+                '</div><div class="modal-menu-facts">' + facts +
+                '</div><p class="modal-label modal-label-spaced">Аллергены</p><p class="modal-allergens">' +
+                details.allergens + '</p><p class="modal-note">' + details.note + "</p>",
+            footer: '<button class="modal-pay-button" type="button" data-modal-pay>Оплатить</button>' +
+                '<p class="modal-total">К оплате: <strong>' + price + "</strong></p>",
             visual: "food"
         });
 
-        const payButton = modalFooter.querySelector("[data-modal-pay]");
+        const payButton = $("[data-modal-pay]", modalFooter);
         if (payButton) {
             payButton.addEventListener("click", function () {
                 showMessage("Оплата меню «" + title + "» пока недоступна: платёжная система не подключена");
