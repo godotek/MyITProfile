@@ -26,9 +26,9 @@ https://www.figma.com/design/bTmPvWnJBrsCT1WTPdevkX/%D0%A1%D0%BE%D0%B2%D0%BC%D0%
 ## Как запустить
 
 ### Требования
-- Скачай ZIP архив GitHub проекта
-- Разархивируй и перейди в MyITProfile/front/index.html
-- Открой страничку и пользуйся
+- Скачать ZIP архив GitHub проекта
+- Разархивировать и перейди в MyITProfile/front/index.html
+- Открыть страничку проекта
 
 ---
 
