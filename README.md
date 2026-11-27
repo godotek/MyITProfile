@@ -5,6 +5,8 @@ https://www.figma.com/design/bTmPvWnJBrsCT1WTPdevkX/%D0%A1%D0%BE%D0%B2%D0%BC%D0%
 
 Kaiten: https://myitprofile.kaiten.ru/space/940327
 
+```npm i```
+
 СПРИНТ 3 :
 
 24.11 - доработка JS кода, обновление Kanban доски, улучшение дизайн-макета
