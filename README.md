@@ -58,10 +58,10 @@ https://www.figma.com/design/bTmPvWnJBrsCT1WTPdevkX/%D0%A1%D0%BE%D0%B2%D0%BC%D0%
 
 ## 👁Куда смотреть в первую очередь :
 
-###| Что ищешь | Где лежит |
-###| index.html | MyItProfile/front/index.html |
-###| анализ ЦА | MyItProfile/analysis/Анализ ЦА |
-###| UI Kit | MyItProfile/design/UI Kit |
+### Что ищешь | Где лежит |
+### index.html | MyItProfile/front/index.html |
+### анализ ЦА | MyItProfile/analysis/Анализ ЦА |
+### UI Kit | MyItProfile/design/UI Kit |
 
 ---
 
